@@ -1,0 +1,164 @@
+openapi: 3.0.3
+info:
+  title: Example of Issue
+  description: Mapping Error
+  version: 1.0.0
+servers:
+  - url: 'https://localhost:8080'
+x-realms: ['internal-realm', 'external-realm']
+paths:
+  /funding/v1/thing/{thingId}:
+    parameters:
+      - name: thingId
+        in: path
+        required: true
+        description: Id of the thing
+        schema:
+          type: string
+          format: uuid
+    get:
+      summary: Retrieve a thing configuration
+      operationId: getDeal
+      tags:
+        - thing
+      responses:
+        '200':
+          description: The retrieved thing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Thing'
+        '404':
+          description: No thing found for the passed id
+    delete:
+      summary: Delete a thing configuration
+      operationId: deleteDeal
+      tags:
+        - thing
+      responses:
+        '200':
+          description: The retrieved thing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Thing'
+        '404':
+          description: No thing found for the passed id
+    put:
+      summary: Replace a thing configuration with the passed thing
+      operationId: replaceDeal
+      tags:
+        - thing
+      requestBody:
+        required: true
+        description: Thing details
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Thing"
+      responses:
+        '200':
+          description: Successfully replaced the thing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Thing'
+        '400':
+          description: Invalid data was passed
+        '404':
+          description: No thing found for the passed id
+    patch:
+      summary: Update a thing configuration with any fields present on the passed thing
+      operationId: updateDeal
+      tags:
+        - thing
+      requestBody:
+        required: true
+        description: Thing details
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Thing"
+      responses:
+        '200':
+          description: Successfully updated the thing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Thing'
+        '400':
+          description: Invalid data was passed
+        '404':
+          description: No thing found for the passed id
+  /funding/v1/thing:
+    post:
+      summary: Store a thing configuration
+      operationId: addDeal
+      tags:
+        - thing
+      requestBody:
+        required: true
+        description: Thing details
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Thing"
+      responses:
+        '200':
+          description: Successfully stored the thing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Thing'
+        '400':
+          description: Invalid data was passed
+    get:
+      summary: Retrieve thing configurations
+      operationId: getDeals
+      tags:
+        - thing
+      responses:
+        '200':
+          description: The retrieved deals
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ThingArray'
+
+components:
+  schemas:
+    Thing:
+      type: object
+      description: The API model for a Thing
+      properties:
+        id:
+          description: The identifier of this thing
+          type: string
+          format: uuid
+        cash-value:
+          $ref: '#/components/schemas/CustomThing'
+        date-one:
+          description: An example od a date
+          type: string
+          format: date
+        date-time-one:
+          description: An example od a date-time
+          type: string
+          format: date-time
+    ThingArray:
+      type: array
+      items:
+        $ref: '#/components/schemas/Thing'
+    CustomThing:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/CustomEnum'
+    CustomEnum:
+      type: string
+      description: a type
+      enum:
+        - ONETHING
+
