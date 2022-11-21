@@ -15,6 +15,9 @@ quarkus.openapi-generator.codegen.spec.openapi_yaml.import-mappings.Instant=java
 quarkus.openapi-generator.codegen.spec.openapi_yaml.type-mappings.DateTime=Instant
 ```
 
+Aftter running the build (`mvn clean install`) the [code produced](generated/quarkus-java-client/target/generated-sources/open-api-yaml/com/example/hammer/client/model/Thing.java)
+shows the types specified as `DateTime` (`date-time`) are generated with a type of `java.time.OffsetDateTime`.
+
 This is not working.  I use the same technique when building the server api in maven:
 ```xml
         <configuration>
