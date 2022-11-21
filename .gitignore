@@ -3,3 +3,5 @@
 /.idea/jpa-buddy.xml
 /.idea/misc.xml
 /.idea/vcs.xml
+/generated/quarkus-java-client/target/
+/generated/quarkus-java-client/src/main/openapi/openapi.yaml
