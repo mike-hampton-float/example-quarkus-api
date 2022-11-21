@@ -46,3 +46,14 @@ This is not working.  I use the same technique when building the server api in m
 ```
 
 This appears to be a bug in the generator.
+
+The reported issue is [here](https://github.com/quarkiverse/quarkus-openapi-generator/issues/181)
+
+A workaround is in this branch.  It is mentioned on the issue.
+
+Putting this into the
+ [application.properties file here](generated/quarkus-java-client/src/main/resources/application.properties) 
+gives the output expected.
+```
+quarkus.openapi-generator.codegen.spec.openapi_yaml.type-mappings.OffsetDateTime=java.time.Instant
+```
